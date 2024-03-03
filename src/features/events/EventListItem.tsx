@@ -1,8 +1,15 @@
 import { ItemGroup, Segment, SegmentGroup, Item, ItemContent, ItemHeader, 
   ItemDescription, Icon, List, Button } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
+import { Events } from "../../app/model/Events";                                                                                                                                                                                                                     
+import { Attendee } from "../../app/model/Attendee";
 
-export default function EventListItem() {
+
+type eventListItemProp ={
+  events: Events
+}
+
+export default function EventListItem(props : eventListItemProp) {
   return (
     <SegmentGroup>
       <Segment>
@@ -10,23 +17,24 @@ export default function EventListItem() {
           <Item>
             <i/>🥑
             <ItemContent>
-              <ItemHeader>Event Title</ItemHeader>
-              <ItemDescription>Hosted By Bob</ItemDescription>
+              <ItemHeader>{props.events.title}</ItemHeader>
+              <ItemDescription>{props.events.description}</ItemDescription>
             </ItemContent>
           </Item>
         </ItemGroup>
       </Segment>
       <Segment>
         <span>
-          <Icon name='clock' />Date
-          <Icon name='marker' />Venue
+          <Icon name='clock' />{props.events.date}
+          <Icon name='marker' />{props.events.venue}
           </span>
       </Segment>
       <Segment secondary>
         <List horizontal>
-          <EventListAttendee />
-          <EventListAttendee />
-          <EventListAttendee />
+          {props.events.attendees.map((attendee: Attendee)=>(
+                <EventListAttendee key={attendee.id} attendees={attendee}/>
+          ))}
+
         </List>
       </Segment>
       <Segment clearing>
