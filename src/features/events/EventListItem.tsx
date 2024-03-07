@@ -8,9 +8,10 @@ import { Attendee } from "../../app/model/Attendee";
 type eventListItemProp ={
   events: Events
   selectEvent: (event: Events) => void
+  deleteEvent: (eventId: string) => void
 }
 
-export default function EventListItem({events, selectEvent} : eventListItemProp) {
+export default function EventListItem({events, selectEvent, deleteEvent} : eventListItemProp) {
   return (
     <SegmentGroup>
       <Segment>
@@ -40,6 +41,11 @@ export default function EventListItem({events, selectEvent} : eventListItemProp)
       </Segment>
       <Segment clearing>
         <span>{events.description}</span>
+        <Button 
+        color='red' 
+        floated='right' 
+        content='Delete' 
+        onClick={()=>deleteEvent(events.id)}/>        
         <Button 
         color='teal' 
         floated='right' 
