@@ -7,9 +7,10 @@ import { Attendee } from "../../app/model/Attendee";
 
 type eventListItemProp ={
   events: Events
+  selectEvent: (event: Events) => void
 }
 
-export default function EventListItem(props : eventListItemProp) {
+export default function EventListItem({events, selectEvent} : eventListItemProp) {
   return (
     <SegmentGroup>
       <Segment>
@@ -17,29 +18,33 @@ export default function EventListItem(props : eventListItemProp) {
           <Item>
             <i/>🥑
             <ItemContent>
-              <ItemHeader>{props.events.title}</ItemHeader>
-              <ItemDescription>{props.events.description}</ItemDescription>
+              <ItemHeader>{events.title}</ItemHeader>
+              <ItemDescription>{events.description}</ItemDescription>
             </ItemContent>
           </Item>
         </ItemGroup>
       </Segment>
       <Segment>
         <span>
-          <Icon name='clock' />{props.events.date}
-          <Icon name='marker' />{props.events.venue}
+          <Icon name='clock' />{events.date}
+          <Icon name='marker' />{events.venue}
           </span>
       </Segment>
       <Segment secondary>
         <List horizontal>
-          {props.events.attendees.map((attendee: Attendee)=>(
+          {events.attendees.map((attendee: Attendee)=>(
                 <EventListAttendee key={attendee.id} attendees={attendee}/>
           ))}
 
         </List>
       </Segment>
       <Segment clearing>
-        <span>Description of the Event</span>
-        <Button color='teal' floated='right' content='View' />
+        <span>{events.description}</span>
+        <Button 
+        color='teal' 
+        floated='right' 
+        content='View' 
+        onClick={()=>selectEvent(events)}/>
       </Segment>
     </SegmentGroup>
   )
