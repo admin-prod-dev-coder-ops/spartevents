@@ -1,20 +1,24 @@
+import { NavLink } from "react-router-dom";
 import { Button, Container, Menu, MenuItem } from "semantic-ui-react";
+import SignedOutBtn from "./SignedOutBtn";
+import SignedInMenu from "./SignedInMenu";
+import { useState } from "react";
 
-type Props = {
-    setFormOpen: (value: boolean) => void;
-}
 
-export default function NavBar({ setFormOpen }: Props) {
+export default function NavBar() {
+    const [auth, setAuth] = useState(true)
     return (
         <Menu inverted={true} fixed='top'>
             <Container>
-                <MenuItem header>
+                <MenuItem header as={NavLink} to="/">
                     <img src="/icon.png" alt="logo" />
                     SpartEvents
                 </MenuItem>
+                <MenuItem name='Events' as={NavLink} to="/events" />
                 <MenuItem>
                     <Button 
-                    onClick={() => setFormOpen(true)}
+                    as={NavLink}
+                    to='/createEvent'
                     floated='right' 
                     positive={true} 
                     inverted={true} 
@@ -22,9 +26,11 @@ export default function NavBar({ setFormOpen }: Props) {
                     </Button>
                 </MenuItem>
                 <MenuItem position="right">
-                    <Button basic inverted content='Login' />
-                    <Button basic inverted content='Register' style={{ marginLeft: '0.5em' }} />
+                    <SignedOutBtn setAuth={()=>false}/>
                 </MenuItem>
+                {auth ? <SignedInMenu setAuth={setAuth} /> : 
+                <SignedOutBtn setAuth={setAuth} />}
+                
             </Container>
         </Menu>
     )

@@ -3,15 +3,14 @@ import { ItemGroup, Segment, SegmentGroup, Item, ItemContent, ItemHeader,
 import EventListAttendee from "./EventListAttendee";
 import { Events } from "../../app/model/Events";                                                                                                                                                                                                                     
 import { Attendee } from "../../app/model/Attendee";
+import { Link } from "react-router-dom";
 
 
 type eventListItemProp ={
   events: Events
-  selectEvent: (event: Events) => void
-  deleteEvent: (eventId: string) => void
 }
 
-export default function EventListItem({events, selectEvent, deleteEvent} : eventListItemProp) {
+export default function EventListItem({events} : eventListItemProp) {
   return (
     <SegmentGroup>
       <Segment>
@@ -44,13 +43,13 @@ export default function EventListItem({events, selectEvent, deleteEvent} : event
         <Button 
         color='red' 
         floated='right' 
-        content='Delete' 
-        onClick={()=>deleteEvent(events.id)}/>        
+        content='Delete' />        
         <Button 
+        as={Link}
+        to ={`/events/${events.id}`}
         color='teal' 
         floated='right' 
-        content='View' 
-        onClick={()=>selectEvent(events)}/>
+        content='View' />
       </Segment>
     </SegmentGroup>
   )
