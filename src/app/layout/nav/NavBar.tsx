@@ -4,7 +4,6 @@ import SignedOutBtn from "./SignedOutBtn";
 import SignedInMenu from "./SignedInMenu";
 import { useState } from "react";
 
-
 export default function NavBar() {
     const [auth, setAuth] = useState(true)
     return (
@@ -15,6 +14,7 @@ export default function NavBar() {
                     SpartEvents
                 </MenuItem>
                 <MenuItem name='Events' as={NavLink} to="/events" />
+                <MenuItem name='Scratch' as={NavLink} to="/scratch" />
                 <MenuItem>
                     <Button 
                     as={NavLink}

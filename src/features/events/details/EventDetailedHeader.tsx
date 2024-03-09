@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button, Header, Image, Item, Segment } from "semantic-ui-react";
-
-export default function EventDetailedHeader() {
+import { Events } from "../../../app/model/Events";
+type Props = {
+  events: Events
+}
+export default function EventDetailedHeader({events} :Props) {
   const eventImagesStyle = {
     filter: 'brightness(30%)'
 };
@@ -12,11 +15,11 @@ const eventImgTxtStyle = {
     width: '100%',
     height: 'auto',
     color: 'white'
-}
-  return (
+};
+return (
     <Segment.Group>
       <Segment basic attached="top" style={{padding:'0'}} >
-        <Image src= '/orange-juice.jpeg'
+        <Image src= '/${events.category}.jpeg'
         fluid style={eventImagesStyle} />
 
       <Segment basic style={eventImgTxtStyle}>
@@ -25,12 +28,12 @@ const eventImgTxtStyle = {
             <Item.Content>
               <Header 
                 size="huge"
-                content='Event Title'
+                content={events.title}
                 style={{color:'white'}}
               />
-              <p>Event Date</p>
+              <p>{events.date}</p>
               <p>
-                Hosted by <strong>Bob</strong>
+                Hosted by <strong>{events.hostedBy}</strong>
               </p>
             </Item.Content>
           </Item>
@@ -41,7 +44,7 @@ const eventImgTxtStyle = {
     <Segment>
     <Button>Cancel My Place</Button>
     <Button color="teal">JOIN THIS EVENT</Button>
-    <Button as={Link} to={`/manage/abc`} color="orange" floated="right">
+    <Button as={Link} to={`/manage/${events.id}`} color="orange" floated="right">
       Manage Event
     </Button>
     </Segment>

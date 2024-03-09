@@ -1,16 +1,9 @@
 import { Grid, GridColumn } from "semantic-ui-react";
 import EvenList from "../EvenList";
-import { sampleData } from "../../../app/api/SampleData";
-import { useEffect, useState } from "react";
-import { Events } from "../../../app/model/Events";
+import { useAppSelector } from "../../../app/store/store";
 
 export default function EventDashboard() {
-  const [events, setEvents] = useState<Events[]>([])
-
-  useEffect(()=>{
-    setEvents(sampleData);
-  },[])
-
+  const events = useAppSelector(state => state.events.events)
   return (
     <Grid>
       <GridColumn width={10}>
