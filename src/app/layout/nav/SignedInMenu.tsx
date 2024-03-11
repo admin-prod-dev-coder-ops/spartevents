@@ -1,22 +1,24 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown, Menu } from "semantic-ui-react";
+import { useAppSelector } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { signOut } from "../../../features/auth/authSlice";
 
-type Props = {
-    setAuth: (value: boolean) => void;
-}
+export default function SignedInMenu() {
 
-export default function SignedInMenu({setAuth}: Props) {
+    const {currentUser} = useAppSelector(state => state.auth);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     function handleSignOut(){
-        setAuth(false);
+        dispatch(signOut());
         navigate('/');
     }
 
   return (
     <Menu.Item position="right">
         {/* <Icon /> */}
-        <Dropdown pointing='top left' text='Bob'>
+        <Dropdown pointing='top left' text={currentUser?.email}>
             <Dropdown.Menu>
             <Dropdown.Item as={Link} 
             to='/createEvent'
