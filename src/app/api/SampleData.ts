@@ -1,8 +1,10 @@
+import { Timestamp } from "firebase/firestore";
+
 export const sampleData = [
     {   
         id: "1",
-        title: "Trip to Empire State Building",
-        date: "2023-09-21",
+        title: "Trip to Empire State Building - 100",
+        date: Timestamp.fromDate(new Date(Date.now() + 60*86400000)),
         category: "culture",
         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus solasdas",
         city: "NY, USA",

@@ -1,5 +1,4 @@
-import { ChangeEvent, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Form, Header,Segment } from "semantic-ui-react";
 import { useAppDispatch, useAppSelector } from "../../../app/store/store";
 import { createEvent, updateEvent } from "../eventSlice";

@@ -1,7 +1,7 @@
 import { ItemGroup, Segment, SegmentGroup, Item, ItemContent, ItemHeader, 
   ItemDescription, Icon, List, Button } from "semantic-ui-react";
 import EventListAttendee from "./EventListAttendee";
-import { Events } from "../../app/model/Events";                                                                                                                                                                                                                     
+import { Events } from "../../app/model/Events";
 import { Attendee } from "../../app/model/Attendee";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../app/store/store";
