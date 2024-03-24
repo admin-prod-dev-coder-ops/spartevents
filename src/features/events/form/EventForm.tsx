@@ -22,7 +22,7 @@ export default function EventForm() {
         if(!event) return;
         console.log("In update Event");
         const docRef = doc(db,'events', event.id);
-        const dateVal = Timestamp.fromDate(new Date(data.date))
+        const dateVal = Timestamp.fromDate(data.date as unknown as Date)
         await updateDoc(docRef,{
             ...data,
             date: dateVal
@@ -31,7 +31,7 @@ export default function EventForm() {
 
     async function createEvent(data: FieldValues) {
         const newEventRef = doc(collection(db,'events'));
-        const dateVal = Timestamp.fromDate(new Date(data.date))
+        const dateVal = Timestamp.fromDate(data.date as unknown as Date)
         console.log("In update Event");
         await setDoc(newEventRef, {
             ...data,
@@ -54,8 +54,8 @@ export default function EventForm() {
             }
                 
         } catch (error: any) {
+            console.log(error.message);
             toast.error(error.message);
-            console.log(error.message)
         }
     }
 
@@ -111,7 +111,6 @@ export default function EventForm() {
                             showTimeSelect
                             timeCaption='time'
                             dateFormat='MMM d, yyyy h:mm aa'
-                            placeholder="Event Date and time"
                         />)}
                     />
                 </Form.Field>

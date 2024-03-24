@@ -20,30 +20,17 @@ export const eventSlice = createSlice({
                 state.events = action.payload;
             },
             prepare: (events: any) => {
-                const mapped = events.map((e: any)=>{
-                    const newDateVal = Timestamp.fromDate(new Date(e.date))
-                    return {...e, date:newDateVal.toDate().toDateString()
-                    //concat(" ").concat(newDateVal.toDate().get)
-                }
+                let eventArr: Events[] = [];
+                Array.isArray(events) ? eventArr =events : eventArr.push(events);
+
+                const mapped = eventArr.map((e: any)=>{
+                    return {...e, date:(e.date as Timestamp) ? ((e.date as Timestamp).toDate()).toISOString()
+                        : "05-04-2024T06:53:57.553Z"}
                 });
                 return {payload: mapped}
             }
-        } ,        
-        createEvent: (state,action)=>{
-            state.events.push(action.payload);
-        },
-        updateEvent: (state,action)=>{
-            state.events[state.events.
-                findIndex(evt=>evt.id===action.payload.id)]=
-                action.payload
-        },
-        deleteEvent: (state,action)=>{
-            state.events.splice(
-            state.events.findIndex(
-                evt=>evt.id===action.payload.id),1)
-        }
+        } 
     }
 })
 
-export const {createEvent, updateEvent, deleteEvent, setEvents} 
-    = eventSlice.actions
+export const {setEvents} = eventSlice.actions
