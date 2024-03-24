@@ -3,46 +3,33 @@ import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedSidebar from "./EventDetailedSidebar";
-import { useAppDispatch, useAppSelector } from "../../../app/store/store";
+import { useAppSelector } from "../../../app/store/store";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../../app/config/firebase";
-import { setEvents } from "../eventSlice";
-import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { actions } from "../eventSlice";
 import LoadingComponent from "../../../app/layout/nav/LoadingComponent";
+import { useFirestore } from "../../../app/hooks/firestore/useFirestore";
 
 
 export default function EventDetailedPage() {
-  const {id} = useParams();
-  const event = useAppSelector(state => state.events.events.find(e=> e.id === id));
-  const dispatch = useAppDispatch();
-  const [loading,setLoading] = useState(true);
-  useEffect(()=>{
-    if(!id) return;
-    const unsubscribe = onSnapshot(doc(db,'events',id),{
-      next: doc =>{
-          dispatch(setEvents({id:doc.id, ...doc.data()}));
-          setLoading(false);
-      },
-      error: err=>{
-        console.log(err);
-        toast.error(err.message);
-        setLoading(false);
-      }
-    })
-    return () => unsubscribe()
-  },[id,dispatch])
+  const { id } = useParams();
+  const event = useAppSelector(state => state.events.data.find(e => e.id === id));
+  const { status } = useAppSelector(state => state.events);
+  const { loadDocument } = useFirestore('events');
+  useEffect(() => {
+    if (!id) return;
+    loadDocument(id, actions)
+  }, [id, loadDocument])
 
-  if(loading) return <LoadingComponent />
+  if (status == 'loading') return <LoadingComponent />
 
-  if(!event) return<h2>Event was not found!</h2>
+  if (!event) return <h2>Event was not found!</h2>
 
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventDetailedHeader events={event}/>
-        <EventDetailedInfo events={event}/>
+        <EventDetailedHeader events={event} />
+        <EventDetailedInfo events={event} />
         <EventDetailedChat />
       </Grid.Column>
       <Grid.Column width={6}>

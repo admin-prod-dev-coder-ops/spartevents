@@ -1,7 +1,7 @@
 import { ActionCreatorWithOptionalPayload, ActionCreatorWithPayload, ActionCreatorWithPreparedPayload, ActionCreatorWithoutPayload, PayloadAction, SliceCaseReducers, ValidateSliceCaseReducers, createSlice } from "@reduxjs/toolkit"
 
-type GenericState<T> = {
-    data?: T
+export type GenericState<T> = {
+    data: T
     status: 'loading' | 'finished' | 'error',
     errors?: any
   }

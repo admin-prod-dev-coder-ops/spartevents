@@ -9,5 +9,6 @@ export interface Events {
     city: string;
     venue: string;
     hostedBy: string;
+    isCancelled: boolean;
     attendees: Attendee[];
   }
