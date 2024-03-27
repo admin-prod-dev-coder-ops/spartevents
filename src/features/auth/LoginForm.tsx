@@ -1,10 +1,11 @@
 import { FieldValues, useForm } from "react-hook-form";
 import ModalWrapper from "../../app/common/ModalWrapper";
-import { Button, Form, Label } from "semantic-ui-react";
+import { Button, Divider, Form, Label } from "semantic-ui-react";
 import { useAppDispatch } from "../../app/store/store";
 import { closeModal } from "../../app/common/modals/modalSlice";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../app/config/firebase";
+import SocialLogin from "./SocialLogin";
 
 export default function LoginForm() {
     const { register, handleSubmit, setError,
@@ -24,7 +25,7 @@ export default function LoginForm() {
         }
     }
     return (
-        <ModalWrapper header='Sign into SpartEvents'>
+        <ModalWrapper header='Sign into SpartEvents' size='mini'>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Input
                     defualtvalues=''
@@ -57,6 +58,8 @@ export default function LoginForm() {
                     color='teal'
                     content='Login'
                 />
+                <Divider horizontal>Or</Divider>
+                <SocialLogin />
             </Form>
         </ModalWrapper>
     )
