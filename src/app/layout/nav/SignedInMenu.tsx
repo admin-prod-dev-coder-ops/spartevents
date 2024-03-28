@@ -22,7 +22,8 @@ export default function SignedInMenu() {
             to='/createEvent'
             text='Create Event'
             icon='plus' />
-          <Dropdown.Item text="My profile" icon='user' />
+          <Dropdown.Item text="My profile" as={Link}
+            to={`/profiles/${currentUser?.uid}`} icon='user' />
           <Dropdown.Item as={Link}
             to='/account' text="My account" icon='settings' />
           <Dropdown.Item onClick={handleSignOut} text="Sign out" icon='power' />
