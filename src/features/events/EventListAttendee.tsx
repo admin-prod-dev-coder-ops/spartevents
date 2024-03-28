@@ -1,6 +1,6 @@
 import { ItemGroup, Segment, SegmentGroup, Item, ItemContent, ItemHeader, 
   ItemDescription} from "semantic-ui-react";
-  import { Attendee } from "../../app/model/Attendee";
+import { Attendee } from "../../app/model/Events";
 
   type AttendeeProp ={
     attendees: Attendee

@@ -5,16 +5,18 @@ import { Controller, FieldValues, useForm } from "react-hook-form";
 import { categoryOptions } from "./categoryOptions";
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
-import { Events } from "../../../app/model/Events";
-import { Timestamp } from "firebase/firestore";
+import { AppEvent } from "../../../app/model/Events";
+import { Timestamp, arrayUnion } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useFirestore } from "../../../app/hooks/firestore/useFirestore";
 import { useEffect } from "react";
 import { actions } from "../eventSlice";
 import LoadingComponent from "../../../app/layout/nav/LoadingComponent";
 
+
 export default function EventForm() {
     const { loadDocument, create, update } = useFirestore('events');
+    const {currentUser} = useAppSelector(state=>state.auth);
     const { register, handleSubmit, control, setValue, formState: { errors, isValid, isSubmitting } } = useForm({
         mode: 'onTouched',
         defaultValues: async () => {
@@ -31,7 +33,7 @@ export default function EventForm() {
         loadDocument(id, actions)
     }, [id, loadDocument])
 
-    async function updateEvent(data: Events) {
+    async function updateEvent(data: AppEvent) {
         if (!event) return;
         await update(data.id, {
             ...data,
@@ -40,17 +42,24 @@ export default function EventForm() {
     }
 
     async function createEvent(data: FieldValues) {
+        if(!currentUser) return;
         const ref = await create({
             ...data,
-            hostedBy: 'bob',
-            attendees: [],
-            hostPhotoURL: '',
+            hostUid: currentUser.uid,
+            hostedBy: currentUser.displayName,
+            hostPhotoURL: currentUser.photoURl,
+            attendees: arrayUnion({
+                id: currentUser.uid,
+                displayName: currentUser.displayName,
+                photoURL: currentUser.photoURl
+            }),
+            attendeeIds: arrayUnion(currentUser.uid),
             date: Timestamp.fromDate(data.date as unknown as Date)
         })
         return ref
     }
 
-    async function handleCancelToggle(event: Events) {
+    async function handleCancelToggle(event: AppEvent) {
         await update(event.id, {
             isCancelled: !event.isCancelled
         });

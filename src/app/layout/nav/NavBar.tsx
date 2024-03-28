@@ -3,22 +3,9 @@ import { Button, Container, Menu, MenuItem } from "semantic-ui-react";
 import SignedOutBtn from "./SignedOutBtn";
 import SignedInMenu from "./SignedInMenu";
 import { useAppSelector } from "../../store/store";
-import { sampleData } from "../../api/SampleData";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { db } from "../../config/firebase";
 
 export default function NavBar() {
     const {authenticated} = useAppSelector(state => state.auth)
-
-    function seedData(){
-        sampleData.forEach(async event =>{
-            const {...rest} = event
-            const newEventRef = doc(collection(db, "events"));
-            await setDoc(newEventRef, event ),{
-                ...rest
-            }
-        })
-    }
 
     return (
         <Menu inverted={true} fixed='top'>
@@ -39,16 +26,6 @@ export default function NavBar() {
                     content='Create Event'>
                     </Button>
                 </MenuItem>
-                {import.meta.env.DEV && (
-                    <MenuItem>
-                        <Button 
-                        inverted={true}
-                        color='teal'
-                        content='Seed data'
-                        onClick={seedData}
-                        />
-                    </MenuItem>
-                )}
 
                 {authenticated ? <SignedInMenu /> : 
                 <SignedOutBtn />}

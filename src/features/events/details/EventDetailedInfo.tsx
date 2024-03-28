@@ -1,7 +1,7 @@
 import { Button, Grid, Icon, Segment } from "semantic-ui-react";
-import { Events } from "../../../app/model/Events";
+import { AppEvent } from "../../../app/model/Events";
 type Props = {
-  events: Events
+  events: AppEvent
 }
 export default function EventDetailedInfo({events}:Props) {
   return (

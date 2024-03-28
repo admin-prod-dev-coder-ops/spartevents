@@ -1,13 +1,13 @@
 import EventListItem from "./EventListItem";
-import { Events } from "../../app/model/Events";
+import { AppEvent } from "../../app/model/Events";
 
 type eventListProps = {
-  events: Events []
+  events: AppEvent []
 }
 export default function EvenList({events}: eventListProps) {
   return (
     <>
-    {events.map((ev: Events)=>(
+    {events.map((ev: AppEvent)=>(
       <EventListItem key={ev.id} events={ev} />
     ))}
 

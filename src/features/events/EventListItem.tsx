@@ -1,13 +1,13 @@
 import { ItemGroup, Segment, SegmentGroup, Item, ItemContent, ItemHeader, 
   ItemDescription, Icon, List, Button, Label } from "semantic-ui-react";
 //import EventListAttendee from "./EventListAttendee";
-import { Events } from "../../app/model/Events";
+import { AppEvent } from "../../app/model/Events";
 //import { Attendee } from "../../app/model/Attendee";
 import { Link } from "react-router-dom";
 import { useFirestore } from "../../app/hooks/firestore/useFirestore";
 
 type eventListItemProp ={
-  events: Events
+  events: AppEvent
 }
 export default function EventListItem({events} : eventListItemProp) {
   const {remove} = useFirestore('events');
